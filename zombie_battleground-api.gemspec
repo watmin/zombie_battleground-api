@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['john@shields.wtf']
 
   spec.summary       = 'An implemenetation of the ZombieBattleground public API'
-  spec.homepage      = 'https://john.shields.wtf'
+  spec.homepage      = 'https://github.com/watmin/zombie_battleground-api'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
