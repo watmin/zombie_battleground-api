@@ -9,44 +9,114 @@ require 'zombie_battleground/api/responses/response_helper'
 
 module ZombieBattleground
   class Api
-    ##
-    # Response validator for GetMatches
-    class GetMatchesResponse
-      include ActiveModel::Validations
-      include ZombieBattleground::Api::ValidationHelper
-      include ZombieBattleground::Api::ResponseHelper
+    class Responses
+      ##
+      # Response validator for GetMatches
+      class GetMatchesResponse
+        include ActiveModel::Validations
+        include ZombieBattleground::Api::ValidationHelper
+        include ZombieBattleground::Api::Responses::ResponseHelper
 
-      attr_reader :total, :page, :limit, :matches
+        ##
+        # @!attribute [r] total
+        # the total number of results available
+        #
+        # @return [Integer]
+        #
+        # @example
+        #   response.total #=> 1505
+        #
+        # @api public
+        attr_reader :total
 
-      validate :total_is_a_non_negative_integer
-      validate :page_is_a_non_negative_integer
-      validate :limit_is_a_non_negative_integer
-      validate :matches_is_an_array_of_match
+        ##
+        # @!attribute [r] page
+        # the page number of the results
+        #
+        # @return [Integer]
+        #
+        # @example
+        #   response.page #=> 1
+        #
+        # @api public
+        attr_reader :page
 
-      def initialize(response)
-        handle_errors(response)
+        ##
+        # @!attribute [r] limit
+        # the limit of results for the page
+        #
+        # @return [Integer]
+        #
+        # @example
+        #   response.limit #=> 100
+        #
+        # @api public
+        attr_reader :limit
 
-        JSON.parse(response.body).each do |key, value|
-          if key == 'matches'
-            instance_variable_set("@#{key}".to_sym, value.map { |match| ZombieBattleground::Api::Match.new(match) })
-          else
-            instance_variable_set("@#{key}".to_sym, value)
+        ##
+        # @!attribute [r] matches
+        # the matches found for the page and limit
+        #
+        # @return [Array<ZombieBattleground::Api::Models::Match>]
+        #
+        # @example
+        #   response.matches #=> [ZombieBattleground::Api::Models::Match]
+        #
+        # @api public
+        attr_reader :matches
+
+        validate :total_is_a_non_negative_integer
+        validate :page_is_a_non_negative_integer
+        validate :limit_is_a_non_negative_integer
+        validate :matches_is_an_array_of_match
+
+        ##
+        # Creates a new GetMatchesResponse
+        #
+        # @param response [Faraday::Response] Faraday response from endpoint
+        #
+        # @return [ZombieBattleground::Api::GetMatchesResponse]
+        #
+        # @example
+        #   response = ZombieBattleground::Api::GetMatchesResponse.new(faraday_response)
+        #   # => ZombieBattleground::Api::GetMatchesResponse
+        #
+        # @api public
+        def initialize(response)
+          handle_errors(response)
+
+          JSON.parse(response.body).each do |key, value|
+            if key == 'matches'
+              instance_variable_set(
+                "@#{key}".to_sym, value.map { |match| ZombieBattleground::Api::Models::Match.new(match) }
+              )
+            else
+              instance_variable_set("@#{key}".to_sym, value)
+            end
           end
         end
-      end
 
-      def matches_is_an_array_of_match
-        unless @matches.is_a?(Array)
-          errors.add(:matches, 'Matchs must be an array')
-          return
-        end
+        private
 
-        @matches.each do |match|
-          next if match.is_a?(ZombieBattleground::Api::Match) &&
-                  match.valid? &&
-                  match.errors.size.zero?
+        ##
+        # Validator for matches attribute
+        #
+        # @return [void]
+        #
+        # @api private
+        def matches_is_an_array_of_match
+          unless @matches.is_a?(Array)
+            errors.add(:matches, 'Matchs must be an array')
+            return
+          end
 
-          errors.add(:matches, 'matches must be an array of Match')
+          @matches.each do |match|
+            next if match.is_a?(ZombieBattleground::Api::Models::Match) &&
+                    match.valid? &&
+                    match.errors.size.zero?
+
+            errors.add(:matches, 'matches must be an array of Match')
+          end
         end
       end
     end

@@ -10,28 +10,62 @@ require 'zombie_battleground/api/responses/response_helper'
 module ZombieBattleground
   class Api
     ##
-    # Response validator for GetCard
-    class GetCardResponse
-      include ActiveModel::Validations
-      include ZombieBattleground::Api::ValidationHelper
-      include ZombieBattleground::Api::ResponseHelper
+    # Namespace for Responses
+    class Responses
+      ##
+      # Response validator for GetCard
+      class GetCardResponse
+        include ActiveModel::Validations
+        include ZombieBattleground::Api::ValidationHelper
+        include ZombieBattleground::Api::Responses::ResponseHelper
 
-      attr_reader :card
+        ##
+        # @!attribute [r] card
+        # the card
+        #
+        # @return [ZombieBattleground::Api::Deck]
+        #
+        # @example
+        #   response.card #=> ZombieBattleground::Api::Deck
+        #
+        # @api public
+        attr_reader :card
 
-      validate :card_is_a_card
+        validate :card_is_a_card
 
-      def initialize(response)
-        handle_errors(response)
+        ##
+        # Creates a new GetCardResponse
+        #
+        # @param response [Faraday::Response] Faraday response from endpoint
+        #
+        # @return [ZombieBattleground::Api::GetCardResponse]
+        #
+        # @example
+        #   response = ZombieBattleground::Api::GetCardResponse.new(faraday_response)
+        #   # => ZombieBattleground::Api::GetCardResponse
+        #
+        # @api public
+        def initialize(response)
+          handle_errors(response)
 
-        @card = ZombieBattleground::Api::Card.new(JSON.parse(response.body))
-      end
+          @card = ZombieBattleground::Api::Models::Card.new(JSON.parse(response.body))
+        end
 
-      def card_is_a_card
-        return if @card.is_a?(ZombieBattleground::Api::Card) &&
-                  @card.valid? &&
-                  @card.errors.size.zero?
+        private
 
-        errors.add(:card, 'card must be a Card')
+        ##
+        # Validator for card attribute
+        #
+        # @return [void]
+        #
+        # @api private
+        def card_is_a_card
+          return if @card.is_a?(ZombieBattleground::Api::Models::Card) &&
+                    @card.valid? &&
+                    @card.errors.size.zero?
+
+          errors.add(:card, 'card must be a Card')
+        end
       end
     end
   end

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+##
+# ZombieBattleground namespace
 module ZombieBattleground
   class Api
-    VERSION = '0.1.0'
+    ##
+    # Verion of the Gem
+    VERSION = '0.2.0'
   end
 end

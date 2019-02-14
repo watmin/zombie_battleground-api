@@ -46,6 +46,9 @@ build-iPhoneSimulator/
 # .ruby-version
 # .ruby-gemset
 
+# Ignore Vim swaps
+*.sw*
+
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 =======
@@ -54,6 +57,7 @@ build-iPhoneSimulator/
 /_yardoc/
 /coverage/
 /doc/
+/out/
 /pkg/
 /spec/reports/
 /tmp/

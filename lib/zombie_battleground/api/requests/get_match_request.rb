@@ -7,23 +7,53 @@ require 'zombie_battleground/api/requests/request_helper'
 
 module ZombieBattleground
   class Api
-    ##
-    # Request validator for GetMatch
-    class GetMatchRequest
-      include ActiveModel::Validations
-      include ZombieBattleground::Api::ValidationHelper
-      include ZombieBattleground::Api::RequestHelper
+    class Requests
+      ##
+      # Request validator for GetMatch
+      class GetMatchRequest
+        include ActiveModel::Validations
+        include ZombieBattleground::Api::ValidationHelper
+        include ZombieBattleground::Api::Requests::RequestHelper
 
-      attr_accessor :id
+        ##
+        # @!attribute [r] id
+        # Match's id
+        #
+        # @return [Integer]
+        #
+        # @example
+        #   request.id #=> 1
+        #
+        # @api public
+        attr_accessor :id
 
-      validate :id_is_a_non_negative_integer
+        validate :id_is_a_non_negative_integer
 
-      def uri
-        "match/#{id}"
-      end
+        ##
+        # The URI for the endpoint
+        #
+        # @return [String]
+        #
+        # @example
+        #   request.uri # => "match/1"
+        #
+        # @api public
+        def uri
+          "match/#{id}"
+        end
 
-      def params
-        {}
+        ##
+        # Match does not take params, return an empty Hash
+        #
+        # @return [Hash]
+        #
+        # @example
+        #   request.params # => {}
+        #
+        # @api public
+        def params
+          {}
+        end
       end
     end
   end

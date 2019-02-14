@@ -23,6 +23,8 @@ Or install it yourself as:
 Use the singleton class `ZombieBattleground::Api`
 
 ```ruby
+require 'zombie_battleground-api/api'
+
 ZombieBattleground::Api.decks(limit: 1)
 # => ZombieBattleground::Api::GetDecksResponse
 ```
@@ -30,6 +32,8 @@ ZombieBattleground::Api.decks(limit: 1)
 Use the API client directly
 
 ```ruby
+require 'zombie_battleground-api/api/client'
+
 client = ZombieBattleground::Api::Client.new
 client.decks(limit: 1) # => ZombieBattleground::Api::GetDecksResponse
 ```

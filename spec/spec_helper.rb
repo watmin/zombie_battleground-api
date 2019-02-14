@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'simplecov'
+
+SimpleCov.start do
+  refuse_coverage_drop
+
+  add_filter('/spec/')
+
+  minimum_coverage(60)
+  coverage_dir('out/coverage')
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
