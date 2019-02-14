@@ -8,7 +8,7 @@ require 'zombie_battleground/api/validation_helper'
 require 'zombie_battleground/api/responses/response_helper'
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Response validator for GetMatches
     class GetMatchesResponse

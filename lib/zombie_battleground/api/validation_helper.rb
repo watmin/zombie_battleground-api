@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Validation helpers for sanitizing inputs and ouputs
     module ValidationHelper

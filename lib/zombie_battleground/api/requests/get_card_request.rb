@@ -6,7 +6,7 @@ require 'zombie_battleground/api/validation_helper'
 require 'zombie_battleground/api/requests/request_helper'
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Request validator for GetCard
     class GetCardRequest

@@ -18,7 +18,7 @@ require 'zombie_battleground/api/requests/get_card_request'
 require 'zombie_battleground/api/responses/get_card_response'
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # The API Client for Zombie Battleground
     class Client
@@ -50,9 +50,9 @@ module ZombieBattleground
         decks
       end
 
-      def deck(id:)
+      def deck(**args)
         request = ZombieBattleground::Api::GetDeckRequest.new
-        request.id = id
+        args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
 
         response = connection(uri: request.uri, params: request.params).get
@@ -74,9 +74,9 @@ module ZombieBattleground
         matches
       end
 
-      def match(id:)
+      def match(**args)
         request = ZombieBattleground::Api::GetMatchRequest.new
-        request.id = id
+        args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
 
         response = connection(uri: request.uri, params: request.params).get

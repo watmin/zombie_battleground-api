@@ -3,7 +3,7 @@
 require 'zombie_battleground/api/errors'
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Provides generic methods for response validator classes
     module ResponseHelper

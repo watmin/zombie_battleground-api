@@ -6,7 +6,7 @@ require 'zombie_battleground/api/validation_helper'
 require 'zombie_battleground/api/models/simple_card'
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Validator for Deck
     class Deck

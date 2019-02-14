@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ZombieBattleground
-  module Api
+  class Api
     class Errors
       class BadRequest < StandardError; end
       class InternalServerError < StandardError; end

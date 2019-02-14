@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Provides generic methods for request validator classes
     module RequestHelper

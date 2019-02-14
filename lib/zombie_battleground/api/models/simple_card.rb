@@ -5,7 +5,7 @@ require 'active_record'
 require 'zombie_battleground/api/validation_helper'
 
 module ZombieBattleground
-  module Api
+  class Api
     ##
     # Validator for SimpleCard (only returned from GetDeck(s))
     class SimpleCard
