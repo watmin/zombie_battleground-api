@@ -1,5 +1,7 @@
 # ZombieBattleground::Api
 
+[![Gem Version](https://badge.fury.io/rb/zombie_battleground-api.svg)](https://badge.fury.io/rb/zombie_battleground-api)
+
 Ruby implementation of the Public API for Zombie Battleground
 
 ## Installation
