@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
-See the [API documentation](https://www.rubydoc.info/gems/zombie_battleground-api).
+See the [API documentation](https://www.rubydoc.info/gems/zombie_battleground-api/0.2.1).
 Every API call returns a response object that contains a complete modeled Ruby object of the response.
 
 Use the singleton class `ZombieBattleground::Api`
