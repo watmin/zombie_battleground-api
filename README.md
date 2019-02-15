@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/zombie_battleground-api.svg)](https://badge.fury.io/rb/zombie_battleground-api)
 [![Build Status](https://travis-ci.org/watmin/zombie_battleground-api.svg?branch=master)](https://travis-ci.org/watmin/zombie_battleground-api)
+[![Coverage Status](https://coveralls.io/repos/github/watmin/zombie_battleground-api/badge.svg?branch=master)](https://coveralls.io/github/watmin/zombie_battleground-api?branch=master)
 
 Ruby implementation of the Public API for Zombie Battleground
 
@@ -23,25 +24,33 @@ Or install it yourself as:
 
 ## Usage
 
-See the [API documentation](https://www.rubydoc.info/gems/zombie_battleground-api/0.2.1).
+See the [API documentation](https://www.rubydoc.info/gems/zombie_battleground-api/0.3.0).
 Every API call returns a response object that contains a complete modeled Ruby object of the response.
 
 Use the singleton class `ZombieBattleground::Api`
 
 ```ruby
-require 'zombie_battleground-api/api'
+require 'zombie_battleground/api'
+
+ZombieBattleground::Api.decks_request(limit: 1)
+# => ZombieBattleground::Api::Responses::GetDecksResponse
 
 ZombieBattleground::Api.decks(limit: 1)
-# => ZombieBattleground::Api::Responses::GetDecksResponse
+# => [ZombieBattleground::Api::Models::Decks]
 ```
 
 Use the API client directly
 
 ```ruby
-require 'zombie_battleground-api/api/client'
+require 'zombie_battleground/api/client'
 
 client = ZombieBattleground::Api::Client.new
-client.decks(limit: 1) # => ZombieBattleground::Api::Responses::GetDecksResponse
+
+client.decks_request(limit: 1)
+# => ZombieBattleground::Api::Responses::GetDecksResponse
+
+client.decks(limit: 1)
+# => [ZombieBattleground::Api::Models::Decks]
 ```
 
 ## Development

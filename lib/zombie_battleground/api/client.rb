@@ -3,17 +3,29 @@
 require 'faraday'
 
 require 'zombie_battleground/api/errors'
+require 'zombie_battleground/api/version'
 
+# decks
 require 'zombie_battleground/api/requests/get_decks_request'
 require 'zombie_battleground/api/responses/get_decks_response'
+
+# deck
 require 'zombie_battleground/api/requests/get_deck_request'
 require 'zombie_battleground/api/responses/get_deck_response'
+
+# matches
 require 'zombie_battleground/api/requests/get_matches_request'
 require 'zombie_battleground/api/responses/get_matches_response'
+
+# match
 require 'zombie_battleground/api/requests/get_match_request'
 require 'zombie_battleground/api/responses/get_match_response'
+
+# cards
 require 'zombie_battleground/api/requests/get_cards_request'
 require 'zombie_battleground/api/responses/get_cards_response'
+
+# card
 require 'zombie_battleground/api/requests/get_card_request'
 require 'zombie_battleground/api/responses/get_card_response'
 
@@ -25,10 +37,11 @@ module ZombieBattleground
       ##
       # Creates a new client
       #
-      # @return [void]
+      # @return [ZombieBattleground::Api::Client]
       #
       # @example
       #   client = ZombieBattleground::Api::Client.new
+      #   # => ZombieBattleground::Api::Client
       #
       # @api public
       def initialize
@@ -55,11 +68,11 @@ module ZombieBattleground
       # @raise [ZombieBattleground::Api::Errors::InvalidInput, ZombieBattleground::Api::Errors::InvalidResponse]
       #
       # @example
-      #   response = client.decks(limit: 1)
-      #   response # => ZombieBattleground::Api::Responses::GetDecksResponse
+      #   response = client.decks_reuest(limit: 1)
+      #   # => ZombieBattleground::Api::Responses::GetDecksResponse
       #
       # @api public
-      def decks(**args)
+      def decks_request(**args)
         request = ZombieBattleground::Api::Requests::GetDecksRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
@@ -81,11 +94,11 @@ module ZombieBattleground
       # @raise [ZombieBattleground::Api::Errors::InvalidInput, ZombieBattleground::Api::Errors::InvalidResponse]
       #
       # @example
-      #   response = client.deck(id: 1813)
-      #   response # => ZombieBattleground::Api::Responses::GetDeckResponse
+      #   response = client.deck_request(id: 1813)
+      #   # => ZombieBattleground::Api::Responses::GetDeckResponse
       #
       # @api public
-      def deck(**args)
+      def deck_request(**args)
         request = ZombieBattleground::Api::Requests::GetDeckRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
@@ -114,11 +127,11 @@ module ZombieBattleground
       # @raise [ZombieBattleground::Api::Errors::InvalidInput, ZombieBattleground::Api::Errors::InvalidResponse]
       #
       # @example
-      #   response = client.matches(limit: 1)
-      #   response # => ZombieBattleground::Api::Responses::GetMatchesResponse
+      #   response = client.matches_request(limit: 1)
+      #   # => ZombieBattleground::Api::Responses::GetMatchesResponse
       #
       # @api public
-      def matches(**args)
+      def matches_request(**args)
         request = ZombieBattleground::Api::Requests::GetMatchesRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
@@ -140,11 +153,11 @@ module ZombieBattleground
       # @raise [ZombieBattleground::Api::Errors::InvalidInput, ZombieBattleground::Api::Errors::InvalidResponse]
       #
       # @example
-      #   response = client.match(id: 1454)
-      #   response # => ZombieBattleground::Api::Responses::GetMatchResponse
+      #   response = client.match_request(id: 1454)
+      #   # => ZombieBattleground::Api::Responses::GetMatchResponse
       #
       # @api public
-      def match(**args)
+      def match_request(**args)
         request = ZombieBattleground::Api::Requests::GetMatchRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
@@ -179,11 +192,11 @@ module ZombieBattleground
       # @raise [ZombieBattleground::Api::Errors::InvalidInput, ZombieBattleground::Api::Errors::InvalidResponse]
       #
       # @example
-      #   response = client.cards(limit: 1)
-      #   response # => ZombieBattleground::Api::Responses::GetCardsResponse
+      #   response = client.cards_request(limit: 1)
+      #   # => ZombieBattleground::Api::Responses::GetCardsResponse
       #
       # @api public
-      def cards(**args)
+      def cards_request(**args)
         request = ZombieBattleground::Api::Requests::GetCardsRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
@@ -206,11 +219,11 @@ module ZombieBattleground
       # @raise [ZombieBattleground::Api::Errors::InvalidInput, ZombieBattleground::Api::Errors::InvalidResponse]
       #
       # @example
-      #   response = client.card(mould_id: 2, version: 'v3')
-      #   response # => ZombieBattleground::Api::Responses::GetCardResponse
+      #   response = client.card_request(mould_id: 2, version: 'v3')
+      #   # => ZombieBattleground::Api::Responses::GetCardResponse
       #
       # @api public
-      def card(**args)
+      def card_request(**args)
         request = ZombieBattleground::Api::Requests::GetCardRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?

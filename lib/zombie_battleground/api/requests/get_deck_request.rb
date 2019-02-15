@@ -27,7 +27,7 @@ module ZombieBattleground
         # @api public
         attr_accessor :id
 
-        validate :id_is_a_non_negative_integer
+        validate :id_is_a_non_negative_integer_and_not_null
 
         ##
         # The URI for the endpoint
