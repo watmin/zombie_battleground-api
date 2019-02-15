@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/watmin/zombie_battleground-api.svg?branch=master)](https://travis-ci.org/watmin/zombie_battleground-api)
 [![Coverage Status](https://coveralls.io/repos/github/watmin/zombie_battleground-api/badge.svg?branch=master)](https://coveralls.io/github/watmin/zombie_battleground-api?branch=master)
 
+[Challenge Accepted])https://medium.com/loom-network/https-medium-com-loom-network-introducing-zombie-battleground-public-api-600-pack-giveaway-859fea0dc406)
+
 Ruby implementation of the Public API for Zombie Battleground
 
 ## Installation
