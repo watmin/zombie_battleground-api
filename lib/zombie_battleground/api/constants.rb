@@ -5,7 +5,7 @@
 module ZombieBattleground
   class Api
     ##
-    # Verion of the Gem
-    VERSION = '0.4.0'
+    # Max items per page
+    PAGE_MAX = 100
   end
 end

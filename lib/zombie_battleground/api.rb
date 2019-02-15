@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'zombie_battleground/api/client'
+require 'zombie_battleground/api/extensions'
 
 module ZombieBattleground
   ##
@@ -9,6 +10,8 @@ module ZombieBattleground
     @client = ZombieBattleground::Api::Client.new
 
     class << self
+      include ZombieBattleground::Api::Extensions
+
       ##
       # Queries for Decks and returns a modeled response
       #
