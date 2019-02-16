@@ -59,9 +59,10 @@ module ZombieBattleground
       # @param hero_id [Integer] Optionally filter on Deck hero_id
       # @param primary_skill_id [Integer] Optionally filter on Deck primary_skill_id
       # @param secondary_skill_id [Integer] Optionally filter on Deck secondary_skill_id
-      # @param version [String] Optionally filter on Deck version
+      # @param version [string] optionally filter on deck version
       # @param page [Integer] Used for pagination of query results
       # @param limit [Integer] Used for pagination of query results. Max 100
+      # @param remove_invalid [Boolean] Remove invalid decks from response. Default: true
       #
       # @return [ZombieBattleground::Api::Responses::GetDecksResponse]
       #
@@ -73,12 +74,15 @@ module ZombieBattleground
       #
       # @api public
       def decks_request(**args)
+        remove_invalid = args[:remove_invalid].nil? ? true : args.delete(:remove_invalid)
+
         request = ZombieBattleground::Api::Requests::GetDecksRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
 
         response = connection(uri: request.uri, params: request.params).get
         decks = ZombieBattleground::Api::Responses::GetDecksResponse.new(response)
+        decks.remove_invalid = remove_invalid
         raise ZombieBattleground::Api::Errors::InvalidResponse.new(response, decks) unless decks.valid?
 
         decks
@@ -121,6 +125,7 @@ module ZombieBattleground
       # @param winner_id [String] Optionally filter on Match winner_id
       # @param page [Integer] Used for pagination of query results
       # @param limit [Integer] Used for pagination of query results. Max 100
+      # @param remove_invalid [Boolean] Remove invalid decks from response. Default: true
       #
       # @return [ZombieBattleground::Api::Responses::GetMatchesResponse]
       #
@@ -132,12 +137,15 @@ module ZombieBattleground
       #
       # @api public
       def matches_request(**args)
+        remove_invalid = args[:remove_invalid].nil? ? true : args.delete(:remove_invalid)
+
         request = ZombieBattleground::Api::Requests::GetMatchesRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
 
         response = connection(uri: request.uri, params: request.params).get
         matches = ZombieBattleground::Api::Responses::GetMatchesResponse.new(response)
+        matches.remove_invalid = remove_invalid
         raise ZombieBattleground::Api::Errors::InvalidResponse.new(response, matches) unless matches.valid?
 
         matches
@@ -186,6 +194,7 @@ module ZombieBattleground
       # @param cost [Integer] Optionally filter on Card cost
       # @param page [Integer] Used for pagination of query results
       # @param limit [Integer] Used for pagination of query results. Max 100
+      # @param remove_invalid [Boolean] Remove invalid decks from response. Default: true
       #
       # @return [ZombieBattleground::Api::Responses::GetCardsResponse]
       #
@@ -197,12 +206,15 @@ module ZombieBattleground
       #
       # @api public
       def cards_request(**args)
+        remove_invalid = args[:remove_invalid].nil? ? true : args.delete(:remove_invalid)
+
         request = ZombieBattleground::Api::Requests::GetCardsRequest.new
         args.each { |key, val| request.send("#{key}=", val) }
         raise ZombieBattleground::Api::Errors::InvalidInput, request.errors.messages unless request.valid?
 
         response = connection(uri: request.uri, params: request.params).get
         cards = ZombieBattleground::Api::Responses::GetCardsResponse.new(response)
+        cards.remove_invalid = remove_invalid
         raise ZombieBattleground::Api::Errors::InvalidResponse.new(response, cards) unless cards.valid?
 
         cards

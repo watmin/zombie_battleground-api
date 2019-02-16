@@ -2,6 +2,7 @@
 
 require 'active_record'
 
+require 'zombie_battleground/api/constants'
 require 'zombie_battleground/api/validation_helper'
 require 'zombie_battleground/api/models/simple_card'
 
@@ -245,7 +246,23 @@ module ZombieBattleground
                     card.errors.size.zero?
 
             errors.add(:cards, 'cards must be an array of SimpleCard')
+            break
           end
+
+          cards_has_required_count
+        end
+
+        ##
+        # Validator for correct number of cards in deck
+        #
+        # @return [void]
+        #
+        # @api private
+        def cards_has_required_count
+          return if errors.messages.size.zero? &&
+                    cards.sum(&:amount) == DECK_REQUIRED_CARDS_COUNT
+
+          errors.add(:cards, 'cards must add up to 30')
         end
       end
     end

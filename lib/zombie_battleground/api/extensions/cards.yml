@@ -1,0 +1,49 @@
+---
+
+# API doesn't provide an endpoint for enumerating card metadata
+
+# https://zombiebattleground.io/index.php/Type
+types:
+  - 'WALKER' # standard
+  - 'FERAL'  # haste
+  - 'HEAVY'  # taunt
+
+# Didn't find docs for these yet, duplicating what API is serving now
+kinds:
+  - 'CREATURE'
+  - 'SPELL'
+
+# https://zombiebattleground.io/index.php/Rank
+# implies rarity for creature cards
+ranks:
+  - 'MINION'
+  - 'OFFICER'
+  - 'GENERAL'
+  - 'COMMANDER'
+
+# Didn't find docs for these yet, duplicating what API is serving now
+sets:
+  - 'AIR'
+  - 'EARTH'
+  - 'FIRE'
+  - 'LIFE'
+  - 'TOXIC'
+  - 'WATER'
+  - 'ITEM'
+  - 'OTHERS'
+
+# https://zombiebattleground.io/index.php/Faction
+# factions are a subset of sets
+factions:
+  - 'AIR'
+  - 'EARTH'
+  - 'FIRE'
+  - 'LIFE'
+  - 'TOXIC'
+  - 'WATER'
+
+# https://zombiebattleground.io/index.php/File:Card_description.png
+# https://zombiebattleground.io/index.php/Rarity
+# This one is strange, API returns empty strings right now
+rarities:
+  - ''

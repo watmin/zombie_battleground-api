@@ -44,7 +44,7 @@ RSpec.describe ZombieBattleground::Api::Client do
         .to_return(body: read_text('invalid_get_decks'))
 
       expect do
-        @client.decks_request
+        @client.decks_request(remove_invalid: false)
       end.to raise_error(ZombieBattleground::Api::Errors::InvalidResponse)
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe ZombieBattleground::Api::Client do
     it 'makes a valid request' do
       response = @client.deck_request(id: 1)
       expect(response).to be_a(ZombieBattleground::Api::Responses::GetDeckResponse)
-      expect(response.deck.cards.size).to eq 11
+      expect(response.deck.cards.size).to eq 27
     end
 
     it 'makes an invalid request' do
@@ -91,7 +91,7 @@ RSpec.describe ZombieBattleground::Api::Client do
         .to_return(body: read_text('invalid_get_matches'))
 
       expect do
-        @client.matches_request
+        @client.matches_request(remove_invalid: false)
       end.to raise_error(ZombieBattleground::Api::Errors::InvalidResponse)
     end
   end
@@ -138,7 +138,7 @@ RSpec.describe ZombieBattleground::Api::Client do
         .to_return(body: read_text('invalid_get_cards'))
 
       expect do
-        @client.cards_request
+        @client.cards_request(remove_invalid: false)
       end.to raise_error(ZombieBattleground::Api::Errors::InvalidResponse)
     end
   end

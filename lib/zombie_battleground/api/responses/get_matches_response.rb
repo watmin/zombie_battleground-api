@@ -65,6 +65,18 @@ module ZombieBattleground
         # @api public
         attr_reader :matches
 
+        ##
+        # @!attribute [a] remove_invalid
+        # flag to remove objects in response that are invalid during validation
+        #
+        # @return [Boolean]
+        #
+        # @example
+        #   response.remove_invalid = true
+        #
+        # @api public
+        attr_accessor :remove_invalid
+
         validate :total_is_a_non_negative_integer
         validate :page_is_a_non_negative_integer
         validate :limit_is_a_non_negative_integer
@@ -110,12 +122,40 @@ module ZombieBattleground
             return
           end
 
+          if remove_invalid
+            remove_invalid_matches
+          else
+            matches_contains_valid_matches
+          end
+        end
+
+        ##
+        # Validator for matches in matches
+        #
+        # @return [void]
+        #
+        # @api private
+        def matches_contains_valid_matches
           @matches.each do |match|
             next if match.is_a?(ZombieBattleground::Api::Models::Match) &&
                     match.valid? &&
                     match.errors.size.zero?
 
             errors.add(:matches, 'matches must be an array of Match')
+          end
+        end
+
+        ##
+        # Removes invalid vards from match
+        #
+        # @return [void]
+        #
+        # @api private
+        def remove_invalid_matches
+          @matches.select! do |match|
+            match.is_a?(ZombieBattleground::Api::Models::Match) &&
+              match.valid? &&
+              match.errors.size.zero?
           end
         end
       end

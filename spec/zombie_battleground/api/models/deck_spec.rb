@@ -15,5 +15,13 @@ RSpec.describe ZombieBattleground::Api::Models::Deck do
       deck.valid?
       expect(deck.errors.messages[:cards]).not_to be_empty
     end
+
+    it 'fails validation because cards is not made up of 30 cards' do
+      cards = Array.new(29) { { 'name' => 'some_name', 'amount' => 1 } }
+
+      deck = ZombieBattleground::Api::Models::Deck.new('cards' => cards)
+      deck.valid?
+      expect(deck.errors.messages[:cards]).not_to be_empty
+    end
   end
 end

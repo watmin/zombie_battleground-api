@@ -65,6 +65,18 @@ module ZombieBattleground
         # @api public
         attr_reader :decks
 
+        ##
+        # @!attribute [a] remove_invalid
+        # flag to remove objects in response that are invalid during validation
+        #
+        # @return [Boolean]
+        #
+        # @example
+        #   response.remove_invalid = true
+        #
+        # @api public
+        attr_accessor :remove_invalid
+
         validate :total_is_a_non_negative_integer
         validate :page_is_a_non_negative_integer
         validate :limit_is_a_non_negative_integer
@@ -110,12 +122,40 @@ module ZombieBattleground
             return
           end
 
+          if remove_invalid
+            remove_invalid_decks
+          else
+            decks_contains_valid_decks
+          end
+        end
+
+        ##
+        # Validator for decks in decks
+        #
+        # @return [void]
+        #
+        # @api private
+        def decks_contains_valid_decks
           @decks.each do |deck|
             next if deck.is_a?(ZombieBattleground::Api::Models::Deck) &&
                     deck.valid? &&
                     deck.errors.size.zero?
 
             errors.add(:decks, 'decks must be an array of Deck')
+          end
+        end
+
+        ##
+        # Removes invalid vards from deck
+        #
+        # @return [void]
+        #
+        # @api private
+        def remove_invalid_decks
+          @decks.select! do |deck|
+            deck.is_a?(ZombieBattleground::Api::Models::Deck) &&
+              deck.valid? &&
+              deck.errors.size.zero?
           end
         end
       end

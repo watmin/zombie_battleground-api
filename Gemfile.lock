@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zombie_battleground-api (0.4.1)
+    zombie_battleground-api (0.5.0)
       activerecord
       faraday
       json

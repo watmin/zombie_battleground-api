@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
 require 'zombie_battleground/api/constants'
 
 module ZombieBattleground
@@ -34,7 +36,7 @@ module ZombieBattleground
         # @api public
         def all_cards(**args)
           args.delete(:limit) # query as many as possible
-          return enum_for(:all_cards) unless block_given?
+          return enum_for(:all_cards, args) unless block_given?
 
           page = 1
 
@@ -60,7 +62,7 @@ module ZombieBattleground
         #
         # @api public
         def card_kinds
-          all_cards.map(&:kind).uniq
+          load_cards_data['kinds']
         end
 
         ##
@@ -74,7 +76,7 @@ module ZombieBattleground
         #
         # @api public
         def card_ranks
-          all_cards.map(&:rank).uniq
+          load_cards_data['ranks']
         end
 
         ##
@@ -88,7 +90,21 @@ module ZombieBattleground
         #
         # @api public
         def card_sets
-          all_cards.map(&:set).uniq
+          load_cards_data['sets']
+        end
+
+        ##
+        # Fetches all card factions
+        #
+        # @return [Array<String>]
+        #
+        # @example
+        #   factions = ZombieBattleground::Api.card_factions
+        #   # => [String]
+        #
+        # @api public
+        def card_factions
+          load_cards_data['factions']
         end
 
         ##
@@ -102,7 +118,7 @@ module ZombieBattleground
         #
         # @api public
         def card_types
-          all_cards.map(&:type).uniq
+          load_cards_data['types']
         end
 
         ##
@@ -116,7 +132,7 @@ module ZombieBattleground
         #
         # @api public
         def card_rarities
-          all_cards.map(&:rarity).uniq
+          load_cards_data['rarities']
         end
 
         ##
@@ -127,11 +143,11 @@ module ZombieBattleground
         # @return [Array<ZombieBattleground::Api::Models::Card>]
         #
         # @example
-        #   cards = ZombieBattleground::Api.cards_by_kind(kind: "SPELL")
+        #   cards = ZombieBattleground::Api.cards_by_kind("SPELL")
         #   # => [ZombieBattleground::Api::Models::Card]
         #
         # @api public
-        def cards_by_kind(kind:)
+        def cards_by_kind(kind)
           all_cards(kind: kind).to_a
         end
 
@@ -143,11 +159,11 @@ module ZombieBattleground
         # @return [Array<ZombieBattleground::Api::Models::Card>]
         #
         # @example
-        #   cards = ZombieBattleground::Api.cards_by_rank(rank: "COMMANDER")
+        #   cards = ZombieBattleground::Api.cards_by_rank("COMMANDER")
         #   # => [ZombieBattleground::Api::Models::Card]
         #
         # @api public
-        def cards_by_rank(rank:)
+        def cards_by_rank(rank)
           all_cards(rank: rank).to_a
         end
 
@@ -159,12 +175,28 @@ module ZombieBattleground
         # @return [Array<ZombieBattleground::Api::Models::Card>]
         #
         # @example
-        #   cards = ZombieBattleground::Api.cards_by_set(set: "WATER")
+        #   cards = ZombieBattleground::Api.cards_by_set("WATER")
         #   # => [ZombieBattleground::Api::Models::Card]
         #
         # @api public
-        def cards_by_set(set:)
+        def cards_by_set(set)
           all_cards(set: set).to_a
+        end
+
+        ##
+        # Fetches all cards with selected faction
+        #
+        # @param faction [String]
+        #
+        # @return [Array<ZombieBattleground::Api::Models::Card>]
+        #
+        # @example
+        #   cards = ZombieBattleground::Api.cards_by_faction("WATER")
+        #   # => [ZombieBattleground::Api::Models::Card]
+        #
+        # @api public
+        def cards_by_faction(faction)
+          all_cards(set: faction).to_a
         end
 
         ##
@@ -175,11 +207,11 @@ module ZombieBattleground
         # @return [Array<ZombieBattleground::Api::Models::Card>]
         #
         # @example
-        #   cards = ZombieBattleground::Api.cards_by_type(type: "WALKER")
+        #   cards = ZombieBattleground::Api.cards_by_type("WALKER")
         #   # => [ZombieBattleground::Api::Models::Card]
         #
         # @api public
-        def cards_by_type(type:)
+        def cards_by_type(type)
           all_cards(type: type).to_a
         end
 
@@ -191,12 +223,24 @@ module ZombieBattleground
         # @return [Array<ZombieBattleground::Api::Models::Card>]
         #
         # @example
-        #   cards = ZombieBattleground::Api.cards_by_rarity(rarity: "")
+        #   cards = ZombieBattleground::Api.cards_by_rarity("")
         #   # => [ZombieBattleground::Api::Models::Card]
         #
         # @api public
-        def cards_by_rarity(rarity:)
+        def cards_by_rarity(rarity)
           all_cards(rarity: rarity).to_a
+        end
+
+        private
+
+        ##
+        # Loads the helper data for cards
+        #
+        # @return [Hash]
+        #
+        # @api private
+        def load_cards_data
+          @load_cards_data ||= YAML.safe_load(File.read(File.join(__dir__, 'cards.yml')))
         end
       end
     end

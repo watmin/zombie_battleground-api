@@ -46,7 +46,7 @@ RSpec.describe ZombieBattleground::Api do
     it 'returns a deck response object' do
       response = ZombieBattleground::Api.deck_request(id: 1)
       expect(response).to be_a(ZombieBattleground::Api::Responses::GetDeckResponse)
-      expect(response.deck.cards.size).to eq 11
+      expect(response.deck.cards.size).to eq 27
     end
   end
 
@@ -54,7 +54,7 @@ RSpec.describe ZombieBattleground::Api do
     it 'returns a deck object' do
       deck = ZombieBattleground::Api.deck(id: 1)
       expect(deck).to be_a(ZombieBattleground::Api::Models::Deck)
-      expect(deck.cards.size).to eq 11
+      expect(deck.cards.size).to eq 27
     end
   end
 
