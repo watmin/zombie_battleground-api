@@ -27,7 +27,8 @@ RSpec.describe ZombieBattleground::Api::Extensions::Cards do
   describe '#all_cards' do
     it 'gets them all' do
       cards = ZombieBattleground::Api.all_cards
-      expect(cards.size).to eq 1
+      expect(cards).to be_a(Enumerator)
+      expect(cards.to_a.size).to eq 1
     end
   end
 

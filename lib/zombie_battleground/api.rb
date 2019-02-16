@@ -59,7 +59,7 @@ module ZombieBattleground
       #
       # @api public
       def decks(**args)
-        @client.decks_request(**args).decks
+        decks_request(**args).decks
       end
 
       ##
@@ -91,7 +91,7 @@ module ZombieBattleground
       #
       # @api public
       def deck(**args)
-        @client.deck_request(**args).deck
+        deck_request(**args).deck
       end
 
       ##
@@ -137,7 +137,7 @@ module ZombieBattleground
       #
       # @api public
       def matches(**args)
-        @client.matches_request(**args).matches
+        matches_request(**args).matches
       end
 
       ##
@@ -169,7 +169,7 @@ module ZombieBattleground
       #
       # @api public
       def match(**args)
-        @client.match_request(**args).match
+        match_request(**args).match
       end
 
       ##
@@ -227,7 +227,7 @@ module ZombieBattleground
       #
       # @api public
       def cards(**args)
-        @client.cards_request(**args).cards
+        cards_request(**args).cards
       end
 
       ##
@@ -261,7 +261,7 @@ module ZombieBattleground
       #
       # @api public
       def card(**args)
-        @client.card_request(**args).card
+        card_request(**args).card
       end
     end
   end

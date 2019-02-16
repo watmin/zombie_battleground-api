@@ -26,10 +26,10 @@ Or install it yourself as:
 
 ## Usage
 
-See the [API documentation](https://www.rubydoc.info/gems/zombie_battleground-api/0.4.0).
+See the [API documentation](https://www.rubydoc.info/gems/zombie_battleground-api/0.4.1).
 Every API call returns a response object that contains a complete modeled Ruby object of the response.
 
-Use the singleton class `ZombieBattleground::Api`
+Use the singleton class `ZombieBattleground::Api`. The singleton has additional extentions, the client implements the public API as is.
 
 ```ruby
 require 'zombie_battleground/api'
@@ -50,9 +50,6 @@ client = ZombieBattleground::Api::Client.new
 
 client.decks_request(limit: 1)
 # => ZombieBattleground::Api::Responses::GetDecksResponse
-
-client.decks(limit: 1)
-# => [ZombieBattleground::Api::Models::Decks]
 ```
 
 ## Development

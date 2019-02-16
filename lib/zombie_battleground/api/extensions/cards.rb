@@ -4,46 +4,59 @@ require 'zombie_battleground/api/constants'
 
 module ZombieBattleground
   class Api
-    ##
-    #  API Extensions
     module Extensions
       ##
       # API Extensions for Cards
       module Cards
         ##
-        # Fetches all available cards
+        # Returns an enumerator for all available cards, accepts a block for yields
         #
-        # @return [Array<ZombieBattleground::Api::Models::Card>]
+        # @return [Enumerator]
         #
-        # @example
-        #   cards = ZombieBattleground::Api.all_cards
+        # @example Get an enumerator for the cards
+        #   ZombieBattleground::Api.all_cards
+        #   # => Enumerator
+        #
+        # @example Dump all cards as an array
+        #   ZombieBattleground::Api.all_cards.to_a
         #   # => [ZombieBattleground::Api::Models::Card]
+        #
+        # @example Return the first card
+        #   ZombieBattleground::Api.all_cards.first
+        #   # => ZombieBattleground::Api::Models::Card
+        #
+        # @example Pass it a block
+        #   ZombieBattleground::Api.all_cards do |card|
+        #     do_something_with(card) if card.mould_id == "1" && card.version == "v3"
+        #   end
+        #   # => nil
         #
         # @api public
         def all_cards(**args)
+          args.delete(:limit) # query as many as possible
+          return enum_for(:all_cards) unless block_given?
+
           page = 1
-          cards = []
 
           loop do
             response = @client.cards_request(args.merge(page: page))
-            cards.push(*response.cards)
+            response.cards.each { |card| yield card }
+
             break if response.cards.size < PAGE_MAX
             # :nocov:
             page += 1
             # :nocov:
           end
-
-          cards
         end
 
         ##
-        # Fetches all available cards
+        # Fetches all card kinds
         #
-        # @return [Array<ZombieBattleground::Api::Models::Card>]
+        # @return [Array<String>]
         #
         # @example
-        #   cards = ZombieBattleground::Api.all_cards
-        #   # => [ZombieBattleground::Api::Models::Card]
+        #   cards = ZombieBattleground::Api.card_kinds
+        #   # => [String]
         #
         # @api public
         def card_kinds
@@ -119,7 +132,7 @@ module ZombieBattleground
         #
         # @api public
         def cards_by_kind(kind:)
-          all_cards(kind: kind)
+          all_cards(kind: kind).to_a
         end
 
         ##
@@ -135,7 +148,7 @@ module ZombieBattleground
         #
         # @api public
         def cards_by_rank(rank:)
-          all_cards(rank: rank)
+          all_cards(rank: rank).to_a
         end
 
         ##
@@ -151,7 +164,7 @@ module ZombieBattleground
         #
         # @api public
         def cards_by_set(set:)
-          all_cards(set: set)
+          all_cards(set: set).to_a
         end
 
         ##
@@ -167,7 +180,7 @@ module ZombieBattleground
         #
         # @api public
         def cards_by_type(type:)
-          all_cards(type: type)
+          all_cards(type: type).to_a
         end
 
         ##
@@ -183,7 +196,7 @@ module ZombieBattleground
         #
         # @api public
         def cards_by_rarity(rarity:)
-          all_cards(rarity: rarity)
+          all_cards(rarity: rarity).to_a
         end
       end
     end
