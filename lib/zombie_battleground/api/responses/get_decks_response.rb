@@ -60,10 +60,22 @@ module ZombieBattleground
         # @return [Array<ZombieBattleground::Api::Models::Deck>]
         #
         # @example
-        #   response.deck #=> [ZombieBattleground::Api::Models::Deck]
+        #   response.decks #=> [ZombieBattleground::Api::Models::Deck]
         #
         # @api public
         attr_reader :decks
+
+        ##
+        # @!attribute [r] decks_count
+        # the deck found for the page and limit
+        #
+        # @return [Integer]
+        #
+        # @example
+        #   response.decks_count #=> 1
+        #
+        # @api public
+        attr_reader :decks_count
 
         ##
         # @!attribute [a] remove_invalid
@@ -99,6 +111,9 @@ module ZombieBattleground
 
           JSON.parse(response.body).each do |key, value|
             if key == 'decks'
+              # Keep the API response count, it will differ when invalid decks are stripped
+              @decks_count = value.size
+
               instance_variable_set(
                 "@#{key}".to_sym, value.map { |deck| ZombieBattleground::Api::Models::Deck.new(deck) }
               )
