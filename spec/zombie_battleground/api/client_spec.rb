@@ -76,7 +76,7 @@ RSpec.describe ZombieBattleground::Api::Client do
     it 'makes a valid request' do
       response = @client.matches_request
       expect(response).to be_a(ZombieBattleground::Api::Responses::GetMatchesResponse)
-      expect(response.matches.size).to eq 1
+      expect(response.matches.size).to eq 2
       expect(response.matches.first.id).to eq 1454
     end
 

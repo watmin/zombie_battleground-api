@@ -64,12 +64,9 @@ module ZombieBattleground
         #
         # @api public
         def recently_created_matches(limit)
-          # the `.sort` calls are dodging coverage?...
-          # :nocov:
           all_matches.to_a
                      .sort { |a, b| b.created_at <=> a.created_at }
                      .first(limit)
-          # :nocov:
         end
 
         ##
@@ -85,12 +82,9 @@ module ZombieBattleground
         #
         # @api public
         def recently_updated_matches(limit)
-          # the `.sort` calls are dodging coverage?...
-          # :nocov:
           all_matches.to_a
                      .sort { |a, b| b.updated_at <=> a.updated_at }
                      .first(limit)
-          # :nocov:
         end
 
         ##
@@ -106,13 +100,10 @@ module ZombieBattleground
         #
         # @api public
         def recently_ended_matches(limit)
-          # the `.sort` calls are dodging coverage?...
-          # :nocov:
           all_matches.to_a
                      .select { |match| match.status == 'Ended' }
-                     .sort { |a, b| b.ended_at <=> a.ended_at }
+                     .sort { |a, b| b.updated_at <=> a.updated_at }
                      .first(limit)
-          # :nocov:
         end
 
         ##
@@ -128,14 +119,11 @@ module ZombieBattleground
         #
         # @api public
         def matches_for_player(player_id)
-          # the `.sort` calls are dodging coverage?...
-          # :nocov:
           all_matches(player1_id: player_id)
             .to_a
             .push(*all_matches(player2_id: player_id).to_a)
             .uniq(&:id)
             .sort { |a, b| b.created_at <=> a.created_at }
-          # :nocov:
         end
       end
     end
