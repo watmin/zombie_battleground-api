@@ -67,7 +67,7 @@ module ZombieBattleground
 
         ##
         # @!attribute [r] decks_count
-        # the deck found for the page and limit
+        # the number of decks returned in the response
         #
         # @return [Integer]
         #
