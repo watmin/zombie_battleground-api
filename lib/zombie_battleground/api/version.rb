@@ -6,6 +6,6 @@ module ZombieBattleground
   class Api
     ##
     # Verion of the Gem
-    VERSION = '0.5.2'
+    VERSION = '0.6.0'
   end
 end

@@ -1,0 +1,27 @@
+---
+
+# API doesn't provide an endpoint for enumerating deck metadata
+
+# WHY!? is this not exposed somewhere?... https://zombiebattleground.io/index.php/Faction
+# Complete reverse engineer of overlord number to faction
+# [45] pry(main)> typed_decks = Array.new(6) { |num| [num, Set.new] }.to_h
+# => {0=>#<Set: {}>, 1=>#<Set: {}>, 2=>#<Set: {}>, 3=>#<Set: {}>, 4=>#<Set: {}>, 5=>#<Set: {}>}
+# [46] pry(main)> $decks.map { |deck| typed_decks[deck.hero_id].merge(deck_types(deck)) } ; nil
+# => nil
+# [47] pry(main)> typed_decks
+# => {0=>#<Set: {"TOXIC", "ITEM", "AIR", "EARTH", "FIRE", "WATER"}>,
+#  1=>#<Set: {"FIRE", "ITEM", "LIFE", "EARTH", "AIR", "TOXIC"}>,
+#  2=>#<Set: {"WATER", "ITEM", "LIFE", "FIRE", "EARTH", "TOXIC"}>,
+#  3=>#<Set: {"WATER", "TOXIC", "AIR", "LIFE", "FIRE", "ITEM"}>,
+#  4=>#<Set: {"TOXIC", "WATER", "EARTH", "AIR", "ITEM", "LIFE"}>,
+#  5=>#<Set: {"ITEM", "LIFE", "AIR", "WATER", "EARTH", "FIRE"}>}
+# [48] pry(main)> Array.new(6) { |n| (typed_decks[n]^Set.new(["ITEM", "TOXIC", "LIFE", "AIR", "EARTH", "FIRE", "WATER"])).to_a.first }.map { |weakness| weak_against[weakness] }
+# => ["EARTH", "FIRE", "WATER", "AIR", "TOXIC", "LIFE"]
+
+overlord_types:
+  - 'EARTH'   # 0
+  - 'FIRE'    # 1
+  - 'WATER'   # 2
+  - 'AIR'     # 3
+  - 'TOXIC'   # 4
+  - 'LIFE'    # 5

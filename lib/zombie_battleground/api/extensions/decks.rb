@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
 require 'zombie_battleground/api/constants'
 
 module ZombieBattleground
@@ -47,6 +49,33 @@ module ZombieBattleground
             page += 1
             # :nocov:
           end
+        end
+
+        ##
+        # Return's the deck overlord (hero) type faction
+        #
+        # @param type [Integer]
+        #
+        # @return [String}
+        #
+        # @example
+        #   deck_faction(0) # => "EARTH"
+        #
+        # @api public
+        def deck_faction(type)
+          load_decks_data['overlord_types'][type]
+        end
+
+        private
+
+        ##
+        # Loads the helper data for decks
+        #
+        # @return [Hash]
+        #
+        # @api private
+        def load_decks_data
+          @load_decks_data ||= YAML.safe_load(File.read(File.join(__dir__, 'decks.yml')))
         end
       end
     end

@@ -16,4 +16,11 @@ RSpec.describe ZombieBattleground::Api::Extensions::Decks do
       expect(decks.to_a.size).to eq 1
     end
   end
+
+  describe '#deck_faction' do
+    it 'gets the TOXIC faction from 4' do
+      faction = ZombieBattleground::Api.deck_faction(4)
+      expect(faction).to eq 'TOXIC'
+    end
+  end
 end
