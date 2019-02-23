@@ -23,4 +23,18 @@ RSpec.describe ZombieBattleground::Api::Extensions::Decks do
       expect(faction).to eq 'TOXIC'
     end
   end
+
+  describe '#deck_weak_against' do
+    it 'gets the TOXIC weakness' do
+      weakness = ZombieBattleground::Api.deck_weak_against(4)
+      expect(weakness).to eq 'FIRE'
+    end
+  end
+
+  describe '#deck_strong_against' do
+    it 'gets the TOXIC strongness' do
+      strength = ZombieBattleground::Api.deck_strong_against(4)
+      expect(strength).to eq 'LIFE'
+    end
+  end
 end

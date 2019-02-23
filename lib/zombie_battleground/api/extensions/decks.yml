@@ -25,3 +25,19 @@ overlord_types:
   - 'AIR'     # 3
   - 'TOXIC'   # 4
   - 'LIFE'    # 5
+
+weak_against:
+  'FIRE': 'WATER'
+  'TOXIC': 'FIRE'
+  'LIFE': 'TOXIC'
+  'EARTH': 'LIFE'
+  'AIR': 'EARTH'
+  'WATER': 'AIR'
+
+strong_against:
+  'FIRE': 'TOXIC'
+  'TOXIC': 'LIFE'
+  'LIFE': 'EARTH'
+  'EARTH': 'AIR'
+  'AIR': 'WATER'
+  'WATER': 'FIRE'

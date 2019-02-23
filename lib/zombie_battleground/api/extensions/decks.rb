@@ -66,6 +66,36 @@ module ZombieBattleground
           load_decks_data['overlord_types'][type]
         end
 
+        ##
+        # Return's the deck overlord (hero) faction weakness
+        #
+        # @param type [Integer]
+        #
+        # @return [String}
+        #
+        # @example
+        #   deck_weak_against(0) # => "FIRE"
+        #
+        # @api public
+        def deck_weak_against(type)
+          load_decks_data['weak_against'][load_decks_data['overlord_types'][type]]
+        end
+
+        ##
+        # Return's the deck overlord (hero) faction weakness
+        #
+        # @param type [Integer]
+        #
+        # @return [String}
+        #
+        # @example
+        #   deck_strong_against(0) # => "AIR"
+        #
+        # @api public
+        def deck_strong_against(type)
+          load_decks_data['strong_against'][load_decks_data['overlord_types'][type]]
+        end
+
         private
 
         ##
